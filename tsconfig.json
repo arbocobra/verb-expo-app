@@ -1,17 +1,23 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true,
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+   "extends": "expo/tsconfig.base",
+   "compilerOptions": {
+      "strict": true,
+      "allowJs": true,
+      "jsx": "react-native",
+      "baseUrl": "./",
+      "paths": {
+         "@/*": ["*"]
+      }
+   },
+   // "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "global.d.ts", "components/TestContainer.jsx", "components/SelectVerbs.jsx", "components/SelectTense.jsx", "components/Selction.jsx", "components/Results.jsx", "components/Response.jsx", "components/Questions.jsx", "components/Hints.jsx", "components/Header.jsx", "components/Footer.jsx"]
+   "include": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      ".expo/types/**/*.ts",
+      "expo-env.d.ts",
+      "global.d.ts"
+      // "nativewind-env.d.ts"
+   ]
 }
