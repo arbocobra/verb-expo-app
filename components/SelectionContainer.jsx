@@ -19,9 +19,9 @@ const SelectionContainer = ({ updateDisplay, tense, verb, applyFilter }) => {
             <View id='inner-container' style={styles.innerContainer}>
                {/* <View id='body-text' style={[styles.bodyText, submitState === 2 ? cStyles.hidden : cStyles.display]}> */}
                <View id='body-text' style={styles.bodyText}>
-                  {bodyText.map((el, i) => (
+                  {/* {bodyText.map((el, i) => (
                      <Text key={`body-text-${i}`}>{el}</Text>
-                  ))}
+                  ))} */}
                </View>
                <View style={styles.tenseButton}>
                   <Text>Tense Button</Text>

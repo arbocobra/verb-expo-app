@@ -6,7 +6,6 @@ export const useUpdateDisplay = () => {
    const [verbFilter, setVerbFilter] = useState(['all']);
 
    const updateDisplay = () => {
-      console.log('i ran');
       setDisplayActive(true);
    };
 

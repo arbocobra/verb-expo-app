@@ -10,7 +10,14 @@ const backgroundImagePath = require('../assets/images/background-pattern.png')
 
 const MainAppContent = () => {
    const data = useReadOnlyDatabase();
-   const {isActive, updateDisplay, resetDisplay, applyFilter, tense, verb} = useUpdateDisplay();
+   const {isActive, updateDisplay, resetDisplay, applyFilter, tense, verb}:{
+      isActive:boolean, 
+      updateDisplay:() => void,
+      resetDisplay:() => void,
+      applyFilter:(filter:string, value:string) => void,
+      tense:string[],
+      verb:string[]
+   } = useUpdateDisplay();
 
    return (
       <SafeAreaProvider>
