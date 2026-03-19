@@ -1,4 +1,3 @@
-// import pattern from '@/assets/images/pattern.svg';
 import SelectionContainer from '@/components/SelectionContainer';
 import TestContainer from '@/components/TestContainer';
 import { useReadOnlyDatabase } from '@/hooks/useReadOnlyDatabase';

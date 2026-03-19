@@ -11,17 +11,16 @@ const SelectionContainer = ({ updateDisplay, tense, verb, applyFilter }) => {
       'Conubia nostra inceptos himenaeos orci varius natoque penatibus. Dis parturient montes nascetur ridiculus mus donec rhoncus.',
    ];
    return (
-      <View>
+      <View style={styles.root}>
          <Text style={styles.title}>Selection Container</Text>
-         {/* <Text>{submitState}</Text> */}
-         {/* <View id='container' style={[styles.container, submitState === 2 ? cStyles.hidden : cStyles.display]}> */}
-         <View style={styles.container}>
-            <View id='inner-container' style={styles.innerContainer}>
-               {/* <View id='body-text' style={[styles.bodyText, submitState === 2 ? cStyles.hidden : cStyles.display]}> */}
-               <View id='body-text' style={styles.bodyText}>
-                  {/* {bodyText.map((el, i) => (
-                     <Text key={`body-text-${i}`}>{el}</Text>
-                  ))} */}
+         <View style={[styles.container, submitState === 2 ? cStyles.hidden : cStyles.display]}>
+            <View style={styles.innerContainer}>
+               <View style={[styles.bodyText, submitState === 2 ? cStyles.hidden : cStyles.display]}>
+                  {bodyText.map((el, i) => (
+                     <Text key={`body-text-${i}`} style={styles.bodyTextItem}>
+                        {el}
+                     </Text>
+                  ))}
                </View>
                <View style={styles.tenseButton}>
                   <Text>Tense Button</Text>
@@ -41,10 +40,12 @@ const SelectionContainer = ({ updateDisplay, tense, verb, applyFilter }) => {
 export default SelectionContainer;
 
 const styles = StyleSheet.create({
-   title: { fontSize: 24, textAlign: 'center', fontWeight: 600 },
+   root: { flex: 1 },
+   title: { fontSize: 24, textAlign: 'center', fontWeight: '600' },
    container: { flex: 1, backgroundColor: 'red' },
-   innerContainer: { position: 'relative', flex: 1, zIndex: 1, backgroundColor: 'blue' },
-   bodyText: { flex: 1, gap: 10, position: 'absolute', top: 0, bottom: 0, width: '100%', backgroundColor: 'green' },
+   innerContainer: { flex: 1, zIndex: 1, backgroundColor: 'blue', padding: 16 },
+   bodyText: { flex: 1, backgroundColor: 'green', padding: 12, borderRadius: 8 },
+   bodyTextItem: { marginBottom: 10 },
    tenseButton: {},
    verbButton: {},
    startButton: {},
