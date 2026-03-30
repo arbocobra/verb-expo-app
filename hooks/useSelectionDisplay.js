@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useSelection = (updateDisplay) => {
+export const useSelectionDisplay = (updateDisplay) => {
    const [displayTense, setDisplayTense] = useState(false);
    const [displayVerb, setDisplayVerb] = useState(false);
    const [submitState, setSubmitState] = useState(0);
@@ -10,8 +10,8 @@ export const useSelection = (updateDisplay) => {
    };
 
    const updateSelection = (view) => {
-      if (view === 'tense') setDisplayTense(true);
-      else if (view === 'verb') setDisplayVerb(true);
+      if (view === 'tense') setDisplayTense((current) => !current);
+      else if (view === 'verb') setDisplayVerb((current) => !current);
    };
 
    // useEffect(() => {

@@ -1,0 +1,33 @@
+export const tenseSelection = [
+   { id: 1, value: 'present' },
+   { id: 2, value: 'past' },
+   { id: 3, value: 'present continuous' },
+   { id: 4, value: 'past continuous' },
+   { id: 5, value: 'present perfect' },
+   { id: 6, value: 'past perfect' },
+   { id: 7, value: 'future perfect' },
+   { id: 8, value: 'imperfect' },
+   { id: 9, value: 'imperative' },
+];
+
+export const verbSelection = [
+   { id: 1, value: 'amar (-AR)' },
+   { id: 2, value: 'beber (-ER)' },
+   { id: 3, value: 'decidir (-IR)' },
+   { id: 4, value: 'vir' },
+   { id: 5, value: 'dizer' },
+   { id: 6, value: 'ler' },
+   { id: 7, value: 'dar' },
+   { id: 8, value: 'estar' },
+   { id: 9, value: 'fazer' },
+   { id: 10, value: 'ir' },
+   { id: 11, value: 'ouvir' },
+   { id: 12, value: 'poder' },
+   { id: 13, value: 'querer' },
+   { id: 14, value: 'saber' },
+   { id: 15, value: 'ser' },
+   { id: 16, value: 'ter' },
+   { id: 17, value: 'trazer' },
+   { id: 18, value: 'ver' },
+   { id: 19, value: 'pôr' },
+];

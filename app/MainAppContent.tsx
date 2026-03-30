@@ -1,4 +1,4 @@
-import SelectionContainer from '@/components/SelectionContainer';
+import NewSelection from '@/components/NewSelection';
 import TestContainer from '@/components/TestContainer';
 import { useReadOnlyDatabase } from '@/hooks/useReadOnlyDatabase';
 import { useUpdateDisplay } from '@/hooks/useUpdateDisplay';
@@ -22,7 +22,8 @@ const MainAppContent = () => {
          <View style={styles.innerContainer}>
             {isActive ?
                <TestContainer data={data} resetDisplay={resetDisplay} tense={tense} verb={verb} /> :
-               <SelectionContainer updateDisplay={updateDisplay} tense={tense} verb={verb} applyFilter={applyFilter} />
+               // <SelectionContainer updateDisplay={updateDisplay} tense={tense} verb={verb} applyFilter={applyFilter} />
+               <NewSelection updateDisplay={updateDisplay} tense={tense} verb={verb} applyFilter={applyFilter} />
             }
          </View>
        </ImageBackground>
