@@ -1,49 +1,34 @@
 import NewSelection from '@/components/NewSelection';
 import TestContainer from '@/components/TestContainer';
-import { useReadOnlyDatabase } from '@/hooks/useReadOnlyDatabase';
 import { useUpdateDisplay } from '@/hooks/useUpdateDisplay';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 
 const backgroundImagePath = require('../assets/images/background-pattern.png')
 
 const MainAppContent = () => {
-   const data = useReadOnlyDatabase();
-   const { isActive, updateDisplay, resetDisplay, applyFilter, tense, verb }: {
-      isActive: boolean,
-      updateDisplay: () => void,
-      resetDisplay: () => void,
-      applyFilter: (filter: string, value: string) => void,
-      tense: string[],
-      verb: string[]
-   } = useUpdateDisplay();
+   // const data = useReadOnlyDatabase();
+   // const { isActive, updateDisplay, resetDisplay, applyFilter, tense, verb }: {
+   //    isActive: boolean,
+   //    updateDisplay: () => void,
+   //    resetDisplay: () => void,
+   //    applyFilter: (filter: string, value: string) => void,
+   //    tense: string[],
+   //    verb: string[]
+   // } = useUpdateDisplay();
+   const { isActive, completeSelection, resetDisplay, applyFilter, tense, verb, questionCount } = useUpdateDisplay();
 
    return (
        <ImageBackground source={backgroundImagePath} resizeMode='cover' style={styles.background} >
          <View style={styles.innerContainer}>
             {isActive ?
-               <TestContainer data={data} resetDisplay={resetDisplay} tense={tense} verb={verb} /> :
-               // <SelectionContainer updateDisplay={updateDisplay} tense={tense} verb={verb} applyFilter={applyFilter} />
-               <NewSelection updateDisplay={updateDisplay} tense={tense} verb={verb} applyFilter={applyFilter} />
+               <TestContainer tense={tense} verb={verb} questionCount={questionCount} resetDisplay={resetDisplay} /> :
+               // <SelectionContainer completeSelection={completeSelection} tense={tense} verb={verb} applyFilter={applyFilter} />
+               <NewSelection completeSelection={completeSelection} tense={tense} verb={verb} applyFilter={applyFilter} />
             }
          </View>
        </ImageBackground>
    );
 }
-
-/**
- * <SafeAreaProvider>
-         <ImageBackground source={backgroundImagePath} resizeMode='cover' style={styles.background} >
-            <SafeAreaView style={styles.container} edges={['top', 'bottom', 'left', 'right']}>
-               <View style={styles.innerContainer}>
-                  {isActive ?
-                     <TestContainer data={data} resetDisplay={resetDisplay} tense={tense} verb={verb} /> :
-                     <SelectionContainer updateDisplay={updateDisplay} tense={tense} verb={verb} applyFilter={applyFilter} />
-                  }
-               </View>
-            </SafeAreaView>
-         </ImageBackground>
-      </SafeAreaProvider>
- */
 
 export default MainAppContent;
 

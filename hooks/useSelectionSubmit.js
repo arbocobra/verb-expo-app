@@ -1,42 +1,67 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export const useSelectionSubmit = (setSelection, selectionList) => {
-   const [isAll, setIsAll] = useState(true);
-   
-   const handleCheckbox = (value, isSelected, ref) => {
-      if (value === 'all') {
-         const collection = ref.getElementsByTagName('input');
-         selectAll(isSelected, collection);
+export const useSelectionSubmit = (applySelection, currentSelection, initList, selectType) => {
+   const [optionList, setOptionList] = useState(initList);
+   // const [isAll, setIsAll] = useState(true);
+   const [displayAlert, setDisplayAlert] = useState(false);
+
+   const handleCheckbox = (id) => {
+      // console.log('handleCheckbox: ', value);
+      // console.log('optionList: ', currentSelection);
+      const isSelected = optionList[id].isChecked; // if alreadt checked option is being *UNSELECTED*
+      if (id === 0) {
+         selectAll(isSelected);
       } else {
-         selectOne(value, isSelected);
+         selectOne(id, isSelected);
       }
    };
 
-   const selectAll = (isSelected, collection) => {
+   const selectAll = (isSelected) => {
       if (isSelected) {
-         setIsAll(true);
-         setSelection(['all']);
-         for (let i = 1; i < collection.length; i++) {
-            collection[i].checked = false;
+         if (currentSelection.length > 1) {
+            const updateList = [...optionList];
+            updateList[0].isChecked = false;
+            setOptionList(updateList);
          }
       } else {
-         setIsAll(false);
-         let updateFilter = [...selectionList].filter((el) => el !== 'all');
-         setSelection(updateFilter);
+         setOptionList((current) =>
+            current.map((val, i) => (i === 0 ? { ...val, isChecked: true } : { ...val, isChecked: false })),
+         );
       }
    };
 
-   const selectOne = (val, isSelected) => {
+   const selectOne = (id, isSelected) => {
       if (isSelected) {
-         let arr = [...selectionList].filter((el) => el !== 'all');
-         arr.push(val);
-         setIsAll(false);
-         setSelection(arr);
+         if (currentSelection.length > 1) {
+            const updateList = [...optionList];
+            updateList[id].isChecked = false;
+            setOptionList(updateList);
+         }
       } else {
-         let arr = [...selectionList].filter((el) => el !== val);
-         setSelection(arr);
+         const updateList = [...optionList];
+         const allChecked = optionList[0].isChecked;
+         if (allChecked) {
+            updateList[0].isChecked = false;
+         }
+         // updateList[id].isChecked = true;
+         const count = updateList.filter((el) => el.isChecked).length;
+         if (count === optionList.length - 2) {
+            setOptionList((current) =>
+               current.map((val, i) => (i === 0 ? { ...val, isChecked: true } : { ...val, isChecked: false })),
+            );
+         } else {
+            updateList[id].isChecked = true;
+            setOptionList(updateList);
+         }
       }
    };
 
-   return {isAll, handleCheckbox}
+   useEffect(() => {
+      const submitSelection = [...optionList].filter((el) => el.isChecked).map((val) => val.value);
+      applySelection(selectType, submitSelection);
+   }, [optionList]);
+
+   return { handleCheckbox, optionList };
 };
+
+export const useCountSubmit = () => {};

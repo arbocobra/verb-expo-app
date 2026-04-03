@@ -2,6 +2,7 @@ import { SQLiteProvider } from 'expo-sqlite';
 import { Suspense } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 import MainAppContent from './MainAppContent';
 import ThemeProvider from './ThemeContext';
 // import verbDB from '@/assets/verbs.db'
