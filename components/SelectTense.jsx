@@ -4,8 +4,15 @@ import { FlatList, StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
 import SelectBox from './ui/SelectBox';
 
-const SelectTense = ({ tense, displayStyle, applyFilter }) => {
-   const { handleCheckbox, optionList } = useSelectionSubmit(applyFilter, tense, tenseSelectionInit, 'tense');
+const SelectTense = ({ tense, displayStyle, applyFilter, reset, setResetTenseSelection }) => {
+   const { handleCheckbox, optionList } = useSelectionSubmit(
+      applyFilter,
+      tense,
+      tenseSelectionInit,
+      'tense',
+      reset,
+      setResetTenseSelection,
+   );
 
    const renderItem = ({ item, index }) => (
       <SelectBox
@@ -20,18 +27,14 @@ const SelectTense = ({ tense, displayStyle, applyFilter }) => {
 
    return (
       <Animated.View style={[styles.container, displayStyle]}>
-         {/* <SelectBox id={0} type={'tense'} value={'all'} action={handleCheckbox} isChecked={true} /> */}
          <FlatList
             contentContainerStyle={{
                height: '75%',
-               // paddingTop: 20,
-               // paddingBottom: 20,
                width: '100%',
             }}
             numColumns={2}
             data={optionList}
             renderItem={renderItem}
-            // keyExtractor={(item) => item.id}
          />
       </Animated.View>
    );
@@ -39,14 +42,8 @@ const SelectTense = ({ tense, displayStyle, applyFilter }) => {
 
 const styles = StyleSheet.create({
    container: {
-      // padding: 10,
       width: '100%',
       paddingHorizontal: 10,
-      // flex: 2,
-      // flexDirection: 'row',
-      // borderColor: 'blue',
-      // borderWidth: 1,
-      // borderStyle: 'solid',
    },
 });
 

@@ -1,29 +1,24 @@
-import NewSelection from '@/components/NewSelection';
+import SelectionContainer from '@/components/SelectionContainer';
 import TestContainer from '@/components/TestContainer';
 import { useUpdateDisplay } from '@/hooks/useUpdateDisplay';
+
 import { ImageBackground, StyleSheet, View } from 'react-native';
 
 const backgroundImagePath = require('../assets/images/background-pattern.png')
 
 const MainAppContent = () => {
-   // const data = useReadOnlyDatabase();
-   // const { isActive, updateDisplay, resetDisplay, applyFilter, tense, verb }: {
-   //    isActive: boolean,
-   //    updateDisplay: () => void,
-   //    resetDisplay: () => void,
-   //    applyFilter: (filter: string, value: string) => void,
-   //    tense: string[],
-   //    verb: string[]
-   // } = useUpdateDisplay();
-   const { isActive, completeSelection, resetDisplay, applyFilter, tense, verb, questionCount } = useUpdateDisplay();
+// const MainAppContent = ({resetTest, renderKey}:{resetTest:() => void, renderKey:number}) => {
+   const { isActive, completeSelection, resetApp, applyFilter, tense, verb, questions, selectedCount, reset, setResetTest,
+      setResetSelection } = useUpdateDisplay();
 
    return (
        <ImageBackground source={backgroundImagePath} resizeMode='cover' style={styles.background} >
          <View style={styles.innerContainer}>
             {isActive ?
-               <TestContainer tense={tense} verb={verb} questionCount={questionCount} resetDisplay={resetDisplay} /> :
-               // <SelectionContainer completeSelection={completeSelection} tense={tense} verb={verb} applyFilter={applyFilter} />
-               <NewSelection completeSelection={completeSelection} tense={tense} verb={verb} applyFilter={applyFilter} />
+               // <TestContainer key={renderKey} selectedCount={selectedCount} resetDisplay={resetDisplay} questions={questions} totalCount={questions.length} reset={reset} resetTest={resetTest} /> :
+               // <SelectionContainer key={renderKey} completeSelection={completeSelection} tense={tense} verb={verb} applyFilter={applyFilter} resetDisplay={resetDisplay} reset={reset} resetTest={resetTest} />
+               <TestContainer selectedCount={selectedCount} resetApp={resetApp} questions={questions} totalCount={questions.length} reset={reset} setResetTest={setResetTest} /> :
+               <SelectionContainer completeSelection={completeSelection} tense={tense} verb={verb} applyFilter={applyFilter} resetApp={resetApp} reset={reset} setResetSelection={setResetSelection} />
             }
          </View>
        </ImageBackground>

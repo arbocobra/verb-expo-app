@@ -8,19 +8,19 @@ import ThemeProvider from './ThemeContext';
 // import verbDB from '@/assets/verbs.db'
 
 export default function App() {
+
   return (
-    
-      <Suspense fallback={<View><ActivityIndicator size="large" /></View>}>
-        <SQLiteProvider
-          databaseName="verbApp.db"
-          assetSource={{ assetId: require('../assets/verbs.db') }}
-        >
-          <ThemeProvider>
-            <GestureHandlerRootView>
-          <MainAppContent />
+    <Suspense fallback={<View><ActivityIndicator size="large" /></View>}>
+      <SQLiteProvider
+        databaseName="verbApp.db"
+        assetSource={{ assetId: require('../assets/verbs.db') }}
+      >
+        <ThemeProvider>
+          <GestureHandlerRootView>
+            <MainAppContent />
           </GestureHandlerRootView>
-          </ThemeProvider>
-        </SQLiteProvider>
-      </Suspense>
+        </ThemeProvider>
+      </SQLiteProvider>
+    </Suspense>
   );
 }

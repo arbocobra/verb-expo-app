@@ -1,13 +1,18 @@
-import { useEffect, useState } from 'react';
+// import { tenseSelectionInit, verbSelectionInit } from '@/constants/options';
+import { useEffect, useRef, useState } from 'react';
 
-export const useSelectionSubmit = (applySelection, currentSelection, initList, selectType) => {
-   const [optionList, setOptionList] = useState(initList);
-   // const [isAll, setIsAll] = useState(true);
-   const [displayAlert, setDisplayAlert] = useState(false);
-
+export const useSelectionSubmit = (
+   applySelection,
+   currentSelection,
+   initList,
+   selectType,
+   reset,
+   setSelectionStatus,
+) => {
+   // const listRef = useRef(initList);
+   const listRef = useRef(initList.map((item) => ({ ...item })));
+   const [optionList, setOptionList] = useState(initList.map((item) => ({ ...item })));
    const handleCheckbox = (id) => {
-      // console.log('handleCheckbox: ', value);
-      // console.log('optionList: ', currentSelection);
       const isSelected = optionList[id].isChecked; // if alreadt checked option is being *UNSELECTED*
       if (id === 0) {
          selectAll(isSelected);
@@ -56,12 +61,41 @@ export const useSelectionSubmit = (applySelection, currentSelection, initList, s
       }
    };
 
+   const resetInitialState = () => {
+      setOptionList(listRef.current.map((item) => ({ ...item })));
+      setSelectionStatus(true);
+      console.log('getInitialState ran ', selectType);
+   };
+
    useEffect(() => {
-      const submitSelection = [...optionList].filter((el) => el.isChecked).map((val) => val.value);
-      applySelection(selectType, submitSelection);
+      console.log('first render ', selectType);
+   }, []);
+
+   useEffect(() => {
+      if (reset) {
+         console.log('optionList changed - reset ', optionList);
+      } else {
+         console.log('optionList changed - applySelection ran ', selectType);
+         const submitSelection = [...optionList].filter((el) => el.isChecked).map((val) => val.value);
+         applySelection(selectType, submitSelection);
+      }
    }, [optionList]);
+
+   useEffect(() => {
+      if (reset) {
+         console.log('I reset - useSelectionSubmit, ', selectType);
+         // const initListState = selectType === 'tense' ? [...tenseSelectionInit] : [...verbSelectionInit];
+         // setOptionList(initListState);
+         resetInitialState();
+      }
+   }, [reset]);
+
+   // useEffect(() => {
+   //    renderRef.current = renderRef.current + 1;
+   //    console.log(`selectionSubmit: ${selectType} render `, renderRef.current);
+   //    const vals = { optionList, currentSelection, selectType, reset };
+   //    console.log(vals);
+   // });
 
    return { handleCheckbox, optionList };
 };
-
-export const useCountSubmit = () => {};

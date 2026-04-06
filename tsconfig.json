@@ -4,7 +4,6 @@
       "strict": true,
       "allowJs": true,
       "jsx": "react-native",
-      "baseUrl": "./",
       "paths": {
          "@/*": ["./*"]
       }

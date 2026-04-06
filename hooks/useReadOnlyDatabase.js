@@ -17,79 +17,83 @@ export const useReadOnlyDatabase = () => {
    return data;
 };
 
-export const useDatabase = (tense, verbs) => {
+export const useDatabase = (reset) => {
    const db = useSQLiteContext();
-   const [data, setData] = useState([]);
+
    const [filteredData, setFilteredData] = useState([]);
-   const [count, setCount] = useState(0);
+   const [totalCount, setTotalCount] = useState(0);
 
-   const getFilteredData = (allData) => {
-      let tenseFilteredData, verbFilteredData;
-      if (tense[0] === 'all') {
-         tenseFilteredData = [...allData];
-      } else {
-         tenseFilteredData = [...allData].filter((item) => tense.includes(item.tense));
+   const getQueryString = (isAllTense, isAllVerbs, tense, verbs) => {
+      if (isAllTense && isAllVerbs) {
+         return 'SELECT * FROM verbs';
       }
-
-      if (verbs[0] === 'all') {
-         verbFilteredData = [...tenseFilteredData];
-      } else {
-         verbFilteredData = [...tenseFilteredData].filter((item) => verbs.includes(item.infinitive_p));
+      if (!isAllTense && isAllVerbs) {
+         const tenseString = tense.map((item) => `'${item}'`).join(', ');
+         return `SELECT * FROM verbs WHERE tense IN (${tenseString})`;
       }
+      if (isAllTense && !isAllVerbs) {
+         const verbString = verbs.map((item) => `'${item}'`).join(', ');
+         return `SELECT * FROM verbs WHERE infinitive_p IN (${verbString})`;
+      }
+      if (!isAllTense && !isAllVerbs) {
+         const tenseString = tense.map((item) => `'${item}'`).join(', ');
+         const verbString = verbs.map((item) => `'${item}'`).join(', ');
 
-      setCount(verbFilteredData.length);
-      return verbFilteredData;
+         return `SELECT * FROM verbs WHERE tense IN (${tenseString}) AND infinitive_p IN (${verbString})`;
+      }
    };
 
-   const randomizeQuestions = (max = null) => {
-      const indexArray = Array.from({ length: count }, (_, i) => i);
-      for (let i = indexArray.length - 1; i > 0; i--) {
-         const j = Math.floor(Math.random() * (i + 1));
-         [indexArray[i], indexArray[j]] = [indexArray[j], indexArray[i]];
-      }
-
-      return max ? indexArray.slice(0, max) : indexArray;
+   const fetchData = async (t, v) => {
+      const queryString = getQueryString(t[0] === 'all', v[0] === 'all', t, v);
+      const filtered = await db.getAllAsync(queryString);
+      setFilteredData(filtered);
    };
 
    useEffect(() => {
-      const fetchData = async () => {
-         const allData = await db.getAllAsync('SELECT * FROM verbs');
-         //  const filteredData = getFilteredData(allData);
-         setData(allData);
-      };
-
-      fetchData();
-   }, []);
+      setTotalCount(filteredData.length);
+   }, [filteredData]);
 
    useEffect(() => {
-      if (data.length) {
-         const fData = getFilteredData(data);
-         setFilteredData(fData);
-         //  console.log(fData);
+      if (reset) {
+         setFilteredData([]);
+         setTotalCount(0);
       }
-   }, [tense, verbs]);
+   }, [reset]);
 
-   return { filteredData, count, randomizeQuestions };
+   // useEffect(() => {
+   //    const fetchData = async () => {
+   //       const queryString = getQueryString(tense[0] === 'all', verbs[0] === 'all')
+   //       const filtered = await db.getAllAsync(queryString);
+   //       // let testTense = ['past', 'present'];
+   //       // let testVerbs = ['ter', 'ser', 'ver'];
+   //       // let tenseString = tense.map((item) => `"${item}"`).join(', ');
+   //       // let verbString = verbs.map((item) => `"${item}"`).join(', ');
+   //       // const filtered = await db.getAllAsync(
+   //       //    `SELECT * FROM verbs WHERE tense IN (${tenseString}) AND infinitive_p IN (${verbString})`,
+   //       // );
+   //       setFilteredData(filtered);
+   //    };
+
+   //    fetchData();
+   // }, []);
+
+   // useEffect(() => {
+   //    if (data.length) {
+   //       const filtered = getFilteredData();
+   //       setFilteredData(filtered);
+   //    }
+   // }, [tense, verbs]);
+
+   // useEffect(() => {
+   //    if (filteredData.length) setTotalCount(filteredData.length);
+   // }, [filteredData]);
+
+   // useEffect(() => {
+   //    renderRef.current = renderRef.current + 1;
+   //    console.log('database render ', renderRef.current);
+   //    const vals = { tense, verbs, filteredData, totalCount, reset };
+   //    console.log(vals);
+   // });
+
+   return { totalCount, filteredData, fetchData };
 };
-
-/**
- * 
- * const db = useSQLiteContext();
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    // Function to fetch data (read operation only)
-    async function fetchData() {
-      const allData = await db.getAllAsync('SELECT * FROM items');
-      setData(allData);
-    }
-    fetchData();
-  }, [db]);
-
-  // Expose only read functionality and data
-  return {
-    data,
-    getItem: async (id) => {
-      return await db.getFirstAsync('SELECT * FROM items WHERE id = ?', [id]);
-    },
- */

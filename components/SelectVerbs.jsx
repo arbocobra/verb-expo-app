@@ -4,8 +4,15 @@ import { FlatList, StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
 import SelectBox from './ui/SelectBox';
 
-const SelectVerb = ({ verb, displayStyle, applyFilter }) => {
-   const { handleCheckbox, optionList } = useSelectionSubmit(applyFilter, verb, verbSelectionInit, 'verb');
+const SelectVerb = ({ verb, displayStyle, applyFilter, reset, setResetVerbSelection }) => {
+   const { handleCheckbox, optionList } = useSelectionSubmit(
+      applyFilter,
+      verb,
+      verbSelectionInit,
+      'verb',
+      reset,
+      setResetVerbSelection,
+   );
 
    const renderItem = ({ item, index }) => (
       <SelectBox

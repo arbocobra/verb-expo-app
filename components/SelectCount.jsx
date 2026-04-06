@@ -1,10 +1,15 @@
 import { useDatabase } from '@/hooks/useReadOnlyDatabase';
+import { useEffect } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
 import SelectBox from './ui/SelectBox';
 
-const SelectCount = ({ verb, tense, displayStyle, completeSelection }) => {
-   const { filteredData, count, randomizeQuestions } = useDatabase(tense, verb);
+const SelectCount = ({ verb, tense, display, completeSelection, displayStyle, reset }) => {
+   const { totalCount, filteredData, fetchData } = useDatabase(reset);
+
+   useEffect(() => {
+      if (display) fetchData(tense, verb);
+   }, [display]);
 
    const countOptions = [
       { id: 0, value: 'All', isChecked: true },
@@ -14,10 +19,8 @@ const SelectCount = ({ verb, tense, displayStyle, completeSelection }) => {
    ];
 
    const handleTest = () => {
-      completeSelection();
+      completeSelection(filteredData, 10);
    };
-
-   const handleSelect = (id) => (id === 0 ? randomizeQuestions() : randomizeQuestions(countOptions[id].value));
 
    const renderItem = ({ item, index }) => (
       <SelectBox
@@ -25,7 +28,7 @@ const SelectCount = ({ verb, tense, displayStyle, completeSelection }) => {
          id={index}
          type={'start'}
          value={item.value}
-         action={handleSelect}
+         action={handleTest}
          isChecked={item.isChecked}
       />
    );
@@ -34,16 +37,16 @@ const SelectCount = ({ verb, tense, displayStyle, completeSelection }) => {
       <Animated.View style={[styles.container, displayStyle]}>
          <Text>Set test length:</Text>
 
-         <Text>Total possible questions: {count}</Text>
+         <Text>Total possible questions: {totalCount}</Text>
          <Pressable onPress={handleTest} style={{ padding: 10, backgroundColor: 'white' }}>
-            <Text style={{ fontSize: 20, fontWeight: 600 }}>BUtton</Text>
+            <Text style={{ fontSize: 20, fontWeight: 600 }}>Button</Text>
          </Pressable>
          {/* <FlatList
             contentContainerStyle={{
                height: '75%',
                width: '100%',
             }}
-            numColumns={3}
+            numColumns={2}
             data={optionList}
             renderItem={renderItem}
          /> */}
