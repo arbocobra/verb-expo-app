@@ -1,9 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useTheme } from '@/app/ThemeContext';
+import { StyleSheet, View } from 'react-native';
+import { Correct, Incorrect, WrongAccent } from './ui/AnswerIcons';
 
-const Answer = () => {
+const Answer = ({ QUESTION, resultId }) => {
+   const { conjugationPR, pronounPR, isImperative } = QUESTION;
+   const { theme } = useTheme();
+   const correctResponse = isImperative ? `${conjugationPR}!` : `${pronounPR} ${conjugationPR}`;
+
    return (
       <View style={styles.container}>
-         <Text style={styles.text}>Answer Display</Text>
+         {resultId === 0 ? (
+            <Correct backgroundColor={theme.secondary} />
+         ) : resultId === 1 ? (
+            <WrongAccent correctResponse={correctResponse} backgroundColor={theme.tertiary} />
+         ) : resultId === 1 ? (
+            <Incorrect correctResponse={correctResponse} backgroundColor={theme.primary} />
+         ) : null}
       </View>
    );
 };
@@ -12,11 +24,6 @@ export default Answer;
 
 const styles = StyleSheet.create({
    container: {
-      padding: 10,
-      border: '1px solid black',
-   },
-   text: {
-      fontSize: 18,
-      fontWeight: 600,
+      // marginVertical: 20,
    },
 });

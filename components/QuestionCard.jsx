@@ -1,17 +1,95 @@
 import { useTheme } from '@/app/ThemeContext';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { QuestionDetails } from './ui/QuestionDetails';
 
-import { StyleSheet, Text, View } from 'react-native';
-
-const QuestionCard = ({ QUESTION }) => {
+const QuestionCard = ({ QUESTION, currentQuestionCount }) => {
    const { theme } = useTheme();
-   const { id, conjugationEN, pronounEN, tense, isPlural, isNegative, isFormal, isImperative } = QUESTION;
+   const { conjugationEN, pronounEN, isPlural, isNegative, isFormal, isImperative, isTemporary } = QUESTION;
    const innerText = isImperative ? `${conjugationEN}!` : `${pronounEN} ${conjugationEN}`;
 
-   console.log(QUESTION);
+   const conditionalStyles =
+      currentQuestionCount % 3 === 1
+         ? {
+              cardBg: {
+                 a: { backgroundColor: theme.primary },
+                 b: { backgroundColor: theme.tertiary },
+                 c: { backgroundColor: theme.secondary },
+              },
+              cardText: { color: 'white' },
+              questionDetails: theme.primaryLight,
+           }
+         : currentQuestionCount % 3 === 2
+           ? {
+                cardBg: {
+                   a: { backgroundColor: theme.tertiary },
+                   b: { backgroundColor: theme.secondary },
+                   c: { backgroundColor: theme.primary },
+                },
+                cardText: { color: '#333' },
+                questionDetails: theme.tertiaryDark,
+             }
+           : {
+                cardBg: {
+                   a: { backgroundColor: theme.secondary },
+                   b: { backgroundColor: theme.primary },
+                   c: { backgroundColor: theme.tertiary },
+                },
+                cardText: { color: '#333' },
+                questionDetails: theme.secondaryDark,
+             };
+
+   // const cardBg =
+   //    currentQuestionCount % 3 === 1
+   //       ? { a: theme.primary, b: theme.tertiary, c: theme.secondary }
+   //       : currentQuestionCount % 3 === 2
+   //         ? { a: theme.tertiary, b: theme.secondary, c: theme.primary }
+   //         : { a: theme.secondary, b: theme.primary, c: theme.tertiary };
+   // const cardText = currentQuestionCount % 3 === 1 ? 'white' : 'black';
+   // const displayConditionsStyle =
+   //    currentQuestionCount % 3 === 1
+   //       ? { fg: 'white', bg: theme.primaryLight }
+   //       : currentQuestionCount % 3 === 2
+   //         ? { fg: theme.tertiaryDark, bg: theme.tertiaryExtraLight }
+   //         : { fg: theme.secondaryDark, bg: theme.secondaryExtraLight };
+
+   const displayConditionsDetails = [
+      { value: 'negative', isTrue: isNegative, icon: 'thumbs-down' },
+      { value: 'plural', isTrue: isPlural, icon: 'people-group' },
+      { value: 'formal', isTrue: isFormal, icon: 'black-tie' },
+      { value: 'temporary', isTrue: isTemporary, icon: 'stopwatch' },
+      // { value: 'imperative', isTrue: isImperative, icon: 'volume-high' },
+   ];
+
+   const displayConditions = displayConditionsDetails
+      .filter((el) => el.isTrue)
+      .concat(displayConditionsDetails.filter((el) => !el.isTrue));
+
+   const renderItem = ({ item, index }) => (
+      <QuestionDetails
+         key={`display-condition-${index}`}
+         value={item.value}
+         iconName={item.icon}
+         isTrue={item.isTrue}
+         colorBg={conditionalStyles.questionDetails}
+      />
+   );
+
    return (
       <View style={styles.container}>
-         <Text style={styles.text}>Question Card</Text>
-         <Text style={styles.questionText}>{innerText}</Text>
+         <View style={[styles.boxC, conditionalStyles.cardBg.c]} />
+         <View style={[styles.boxB, conditionalStyles.cardBg.b]} />
+         <View style={[styles.boxA, conditionalStyles.cardBg.a]}>
+            <Text style={[styles.questionText, conditionalStyles.cardText]}>{innerText}</Text>
+         </View>
+         <View style={styles.infoContainer}>
+            <FlatList
+               contentContainerStyle={styles.infoRow}
+               numColumns={4}
+               data={displayConditions}
+               renderItem={renderItem}
+               columnWrapperStyle={styles.infoColumn}
+            />
+         </View>
       </View>
    );
 };
@@ -19,17 +97,31 @@ export default QuestionCard;
 
 const styles = StyleSheet.create({
    container: {
-      padding: 10,
-      border: '1px solid black',
+      height: 300,
+      alignItems: 'center',
    },
-   text: {
-      fontSize: 18,
-      fontWeight: 600,
+   boxC: {
+      height: 15,
+      marginVertical: 5,
+      width: '80%',
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
    },
+   boxB: { height: 15, width: '90%', marginVertical: 5, borderTopRightRadius: 10, borderTopLeftRadius: 10 },
+   boxA: { flex: 1, width: '100%', marginVertical: 5, borderRadius: 15, justifyContent: 'center' },
    questionText: {
       fontSize: 22,
       fontWeight: 600,
-      fontStyle: 'italic',
+      textTransform: 'uppercase',
       textAlign: 'center',
    },
+   infoContainer: {
+      width: '100%',
+   },
+   infoRow: {
+      width: '100%',
+      justifyContent: 'space-between',
+      // height: 48,
+   },
+   infoColumn: { justifyContent: 'space-evenly' },
 });

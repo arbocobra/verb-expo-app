@@ -5,12 +5,6 @@ const SelectBox = ({ id, type, value, action, isChecked }) => {
    const { theme } = useTheme();
 
    const conditionalStyles = {
-      // defaultBg: type === 'tense' ? {backgroundColor: theme.primaryExtraLight} : type === 'verb' ? {backgroundColor: theme.secondaryExtraLight} : {backgroundColor: theme.tertiaryExtraLight},
-
-      // darkBg: type === 'tense' ? {backgroundColor: theme.primaryDark} : type === 'verb' ? {backgroundColor: theme.secondaryDark} : {backgroundColor: theme.tertiaryDark},
-
-      // border: type === 'tense' ? {borderColor: theme.primaryLight} : type === 'verb' ? {borderColor: theme.secondaryLight} : {borderColor: theme.tertiaryLight},
-
       defaultBg:
          type === 'tense'
             ? theme.primaryExtraLight
@@ -24,28 +18,6 @@ const SelectBox = ({ id, type, value, action, isChecked }) => {
       spacing: type === 'verb' ? 5 : 10,
       buttonHeight: type === 'verb' ? 50 : 60,
       label: isChecked ? '#fff' : '#222',
-   };
-   const elementStyles = {
-      tenseButton: [
-         styles.button,
-         {
-            backgroundColor: isChecked ? theme.primaryDark : theme.primaryExtraLight,
-            borderColor: theme.primaryLight,
-         },
-      ],
-      verbButton: [
-         styles.button,
-         {
-            backgroundColor: isChecked ? theme.secondaryDark : theme.secondaryLight,
-            borderColor: theme.secondaryExtraLight,
-         },
-      ],
-      label: [
-         styles.label,
-         {
-            color: type === 'verb' ? '#fff' : isChecked ? '#fff' : '#222',
-         },
-      ],
    };
 
    const handleSelect = () => {

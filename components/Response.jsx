@@ -1,44 +1,107 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useState } from 'react';
+import { Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-const Response = ({ handleResponse, reset }) => {
-   return (
-      <View style={styles.container}>
-         <Text style={styles.text}>Response Box</Text>
-         <View style={styles.buttonContainer}>
-            <Pressable
-               onPress={() => handleResponse(true, 'hello')}
-               style={[styles.container, { backgroundColor: 'green' }]}
-            >
-               <Text style={styles.buttonText}>Right</Text>
-            </Pressable>
-            <Pressable
-               onPress={() => handleResponse(false, 'goodbye')}
-               style={[styles.container, { backgroundColor: 'red' }]}
-            >
-               <Text style={styles.buttonText}>Wrong</Text>
-            </Pressable>
+const Response = ({ pronoun, isImperative, submit }) => {
+   const [response, setResponse] = useState('');
+
+   const clearInput = () => {
+      setResponse('');
+   };
+
+   const handleSubmit = () => {
+      submit(response.toLowerCase());
+      clearInput();
+      Keyboard.dismiss();
+   };
+
+   if (isImperative) {
+      return (
+         <View style={styles.container}>
+            <View style={styles.inputRow}>
+               <TextInput
+                  value={response}
+                  onChangeText={setResponse}
+                  autoCorrect={false}
+                  autoComplete='off'
+                  autoCapitalize='none'
+                  maxLength={25}
+                  style={styles.input}
+                  onSubmitEditing={handleSubmit}
+               />
+               <Text style={styles.exlText}>!</Text>
+               <Pressable style={styles.buttonContainer} onPress={handleSubmit}>
+                  <Ionicons name='arrow-forward' size={24} />
+               </Pressable>
+            </View>
          </View>
-         <Pressable onPress={reset} style={[styles.container, { backgroundColor: 'blue' }]}>
-            <Text style={styles.buttonText}>Reset</Text>
-         </Pressable>
-      </View>
-   );
+      );
+   } else {
+      return (
+         <View style={styles.container}>
+            <View style={styles.inputRow}>
+               <Text style={styles.proText}>{pronoun}</Text>
+               <TextInput
+                  value={response}
+                  onChangeText={setResponse}
+                  autoCorrect={false}
+                  autoComplete='off'
+                  maxLength={25}
+                  style={styles.input}
+                  onSubmitEditing={handleSubmit}
+               />
+               <Pressable style={styles.buttonContainer} onPress={handleSubmit}>
+                  <Ionicons name='arrow-forward' size={24} />
+               </Pressable>
+            </View>
+         </View>
+      );
+   }
 };
 
 export default Response;
 
 const styles = StyleSheet.create({
    container: {
-      padding: 20,
+      alignItems: 'center',
+      // marginVertical: 20,
    },
    text: {
       fontSize: 18,
       fontWeight: 600,
    },
+   proText: {
+      fontSize: 22,
+      fontWeight: 600,
+      marginRight: 10,
+   },
+   exlText: {
+      fontSize: 22,
+      fontWeight: 600,
+      margin: 5,
+   },
+   inputRow: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+   },
+   input: {
+      backgroundColor: '#e2e2e2',
+      paddingVertical: 10,
+      paddingHorizontal: 5,
+      fontSize: 20,
+      fontWeight: 500,
+      flex: 1,
+      textAlign: 'center',
+   },
    buttonText: { color: 'white', fontSize: 18, fontWeight: 600 },
    buttonContainer: {
-      paddingVertical: 20,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      padding: 5,
+      borderRadius: 7,
+      borderWidth: 1,
+      borderColor: '#cbcbcb',
+      backgroundColor: '#e2e2e2',
+      marginLeft: 10,
    },
 });

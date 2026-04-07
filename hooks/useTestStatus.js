@@ -7,15 +7,15 @@ export const useTestStatus = (totalCount, selectedCount, reset, setResetTest) =>
    const [questionIndexArray, setQuestionIndexArray] = useState([]);
    const [testActive, setTestActive] = useState(true);
 
-   const handleResponse = (bool, val) => {
+   const handleResponse = (isCorrectAnswer, val) => {
       let countRef = currentCount;
-      let resultRef = { ...results };
+      let resultsRef = { ...results };
 
-      if (bool) {
-         let updateResults = [...resultRef.correct, `${currentCount} / ${selectedCount} - ${val} - correct`];
+      if (isCorrectAnswer) {
+         let updateResults = [...resultsRef.correct, val];
          setResults({ ...results, correct: updateResults });
       } else {
-         let updateResults = [...resultRef.incorrect, `${currentCount} / ${selectedCount} - ${val} - not correct`];
+         let updateResults = [...resultsRef.incorrect, val];
          setResults({ ...results, incorrect: updateResults });
       }
       if (isFinal) {
@@ -50,7 +50,6 @@ export const useTestStatus = (totalCount, selectedCount, reset, setResetTest) =>
 
    useEffect(() => {
       if (reset) {
-         console.log('I reset - useTestState');
          resetTestState();
       }
    }, [reset]);

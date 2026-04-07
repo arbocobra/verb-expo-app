@@ -1,5 +1,6 @@
 // import { tenseSelectionInit, verbSelectionInit } from '@/constants/options';
 import { useEffect, useRef, useState } from 'react';
+import { useDatabase } from './useReadOnlyDatabase';
 
 export const useSelectionSubmit = (
    applySelection,
@@ -64,18 +65,10 @@ export const useSelectionSubmit = (
    const resetInitialState = () => {
       setOptionList(listRef.current.map((item) => ({ ...item })));
       setSelectionStatus(true);
-      console.log('getInitialState ran ', selectType);
    };
 
    useEffect(() => {
-      console.log('first render ', selectType);
-   }, []);
-
-   useEffect(() => {
-      if (reset) {
-         console.log('optionList changed - reset ', optionList);
-      } else {
-         console.log('optionList changed - applySelection ran ', selectType);
+      if (!reset) {
          const submitSelection = [...optionList].filter((el) => el.isChecked).map((val) => val.value);
          applySelection(selectType, submitSelection);
       }
@@ -83,19 +76,27 @@ export const useSelectionSubmit = (
 
    useEffect(() => {
       if (reset) {
-         console.log('I reset - useSelectionSubmit, ', selectType);
-         // const initListState = selectType === 'tense' ? [...tenseSelectionInit] : [...verbSelectionInit];
-         // setOptionList(initListState);
          resetInitialState();
       }
    }, [reset]);
 
-   // useEffect(() => {
-   //    renderRef.current = renderRef.current + 1;
-   //    console.log(`selectionSubmit: ${selectType} render `, renderRef.current);
-   //    const vals = { optionList, currentSelection, selectType, reset };
-   //    console.log(vals);
-   // });
-
    return { handleCheckbox, optionList };
+};
+
+export const useCountSelectionSubmit = (display, tense, verb, list, completeSelection, reset) => {
+   const { totalCount, filteredData, fetchData } = useDatabase(reset);
+
+   const handleSelect = (id) => {
+      if (id === 0) {
+         completeSelection(filteredData, totalCount);
+      } else {
+         completeSelection(filteredData, list[id].value);
+      }
+   };
+
+   useEffect(() => {
+      if (display) fetchData(tense, verb);
+   }, [display]);
+
+   return { totalCount, handleSelect };
 };

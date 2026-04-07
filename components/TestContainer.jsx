@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
    root: { padding: 15, flex: 1 },
    container: {
       flex: 1,
-      border: '1px solid black',
    },
    text: {
       fontSize: 18,

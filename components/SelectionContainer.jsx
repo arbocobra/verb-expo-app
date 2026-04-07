@@ -59,7 +59,11 @@ const SelectionContainer = ({ completeSelection, tense, verb, applyFilter, reset
                <Animated.View style={[styles.button, animatedStyles.start, { backgroundColor: theme.tertiary }]}>
                   <GestureDetector gesture={actions.start}>
                      <Animated.View style={[styles.testContainer, animatedStyles.startHeader]}>
-                        <Text style={styles.buttonText}>Start</Text>
+                        {displayStart ? (
+                           <Text style={styles.buttonText}>Set test length</Text>
+                        ) : (
+                           <Text style={styles.buttonText}>Start</Text>
+                        )}
                      </Animated.View>
                   </GestureDetector>
                   <SelectCount
@@ -99,5 +103,5 @@ const styles = StyleSheet.create({
       // transitionDuration: 200,
    },
    testContainer: { width: '100%', alignItems: 'center', justifyContent: 'center' },
-   buttonText: { fontSize: 24, fontWeight: '600' },
+   buttonText: { fontSize: 24, fontWeight: '600', textTransform: 'capitalize' },
 });
