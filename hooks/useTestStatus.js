@@ -30,6 +30,21 @@ export const useTestStatus = (totalCount, selectedCount, reset, setResetTest) =>
    }, [currentCount, selectedCount]);
 
    useEffect(() => {
+      if (isFinal) {
+         console.log('is final ', results);
+      }
+   }, [isFinal]);
+
+   useEffect(() => {
+      console.log('currentCount: ', currentCount);
+      console.log('Q array: ', questionIndexArray);
+      console.log('results: ', results);
+      console.log('isFinal: ', isFinal);
+      console.log('testActive: ', testActive);
+      // console.log('useEffect test');
+   }, [currentCount, questionIndexArray, results, isFinal, testActive]);
+
+   useEffect(() => {
       const indexArray = Array.from({ length: totalCount }, (_, i) => i);
       for (let i = indexArray.length - 1; i > 0; i--) {
          const j = Math.floor(Math.random() * (i + 1));

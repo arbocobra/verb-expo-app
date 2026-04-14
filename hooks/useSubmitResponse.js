@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import { checkAnswer } from '@/functions/responseFunctions';
 
 export const useSubmitResponse = (QUESTION, handleResponse) => {
    const [resultId, setResultId] = useState(null);
@@ -30,12 +29,12 @@ export const useSubmitResponse = (QUESTION, handleResponse) => {
          setTimeout(() => {
             handleResponse(true, fullAnswer);
             setResultId(null);
-         }, 1000);
+         }, 1500);
       } else if (resultId > 0) {
          setTimeout(() => {
             handleResponse(false, fullAnswer);
             setResultId(null);
-         }, 2500);
+         }, 3500);
       }
    }, [fullAnswer, handleResponse, resultId]);
 

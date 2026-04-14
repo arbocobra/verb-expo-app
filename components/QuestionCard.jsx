@@ -38,20 +38,6 @@ const QuestionCard = ({ QUESTION, currentQuestionCount }) => {
                 questionDetails: theme.secondaryDark,
              };
 
-   // const cardBg =
-   //    currentQuestionCount % 3 === 1
-   //       ? { a: theme.primary, b: theme.tertiary, c: theme.secondary }
-   //       : currentQuestionCount % 3 === 2
-   //         ? { a: theme.tertiary, b: theme.secondary, c: theme.primary }
-   //         : { a: theme.secondary, b: theme.primary, c: theme.tertiary };
-   // const cardText = currentQuestionCount % 3 === 1 ? 'white' : 'black';
-   // const displayConditionsStyle =
-   //    currentQuestionCount % 3 === 1
-   //       ? { fg: 'white', bg: theme.primaryLight }
-   //       : currentQuestionCount % 3 === 2
-   //         ? { fg: theme.tertiaryDark, bg: theme.tertiaryExtraLight }
-   //         : { fg: theme.secondaryDark, bg: theme.secondaryExtraLight };
-
    const displayConditionsDetails = [
       { value: 'negative', isTrue: isNegative, icon: 'thumbs-down' },
       { value: 'plural', isTrue: isPlural, icon: 'people-group' },
@@ -97,7 +83,7 @@ export default QuestionCard;
 
 const styles = StyleSheet.create({
    container: {
-      height: 300,
+      height: 320,
       alignItems: 'center',
    },
    boxC: {
@@ -117,6 +103,7 @@ const styles = StyleSheet.create({
    },
    infoContainer: {
       width: '100%',
+      marginVertical: 15,
    },
    infoRow: {
       width: '100%',

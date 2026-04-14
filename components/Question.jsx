@@ -16,7 +16,7 @@ const Question = ({ question, handleResponse, currentQuestionCount, resetApp }) 
             <QuestionCard QUESTION={QUESTION} currentQuestionCount={currentQuestionCount} />
             <Response isImperative={QUESTION.isImperative} pronoun={QUESTION.pronounPR} submit={handleSubmit} />
             <Answer QUESTION={QUESTION} resultId={resultId} />
-            <Hints />
+            <Hints id={QUESTION.hint} pronoun={QUESTION.pronounPR} />
          </View>
       );
    } else
@@ -31,11 +31,11 @@ export default Question;
 
 const styles = StyleSheet.create({
    container: {
-      padding: 15,
+      padding: 20,
       alignContent: 'center',
       flex: 1,
       backgroundColor: 'white',
-      boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.2)',
+      boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.4)',
    },
    text: {
       fontSize: 18,

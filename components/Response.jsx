@@ -25,13 +25,13 @@ const Response = ({ pronoun, isImperative, submit }) => {
                   autoCorrect={false}
                   autoComplete='off'
                   autoCapitalize='none'
-                  maxLength={25}
+                  maxLength={20}
                   style={styles.input}
                   onSubmitEditing={handleSubmit}
                />
                <Text style={styles.exlText}>!</Text>
                <Pressable style={styles.buttonContainer} onPress={handleSubmit}>
-                  <Ionicons name='arrow-forward' size={24} />
+                  <Ionicons name='arrow-forward' size={20} />
                </Pressable>
             </View>
          </View>
@@ -46,12 +46,13 @@ const Response = ({ pronoun, isImperative, submit }) => {
                   onChangeText={setResponse}
                   autoCorrect={false}
                   autoComplete='off'
-                  maxLength={25}
+                  autoCapitalize='none'
+                  maxLength={20}
                   style={styles.input}
                   onSubmitEditing={handleSubmit}
                />
                <Pressable style={styles.buttonContainer} onPress={handleSubmit}>
-                  <Ionicons name='arrow-forward' size={24} />
+                  <Ionicons name='arrow-forward' size={20} />
                </Pressable>
             </View>
          </View>
@@ -64,7 +65,7 @@ export default Response;
 const styles = StyleSheet.create({
    container: {
       alignItems: 'center',
-      // marginVertical: 20,
+      marginVertical: 20,
    },
    text: {
       fontSize: 18,
@@ -93,15 +94,16 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: 500,
       flex: 1,
+      maxWidth: 220,
       textAlign: 'center',
    },
-   buttonText: { color: 'white', fontSize: 18, fontWeight: 600 },
+   // buttonText: { color: 'white', fontSize: 18, fontWeight: 600 },
    buttonContainer: {
       padding: 5,
       borderRadius: 7,
       borderWidth: 1,
       borderColor: '#cbcbcb',
-      backgroundColor: '#e2e2e2',
+      backgroundColor: '#efefef',
       marginLeft: 10,
    },
 });

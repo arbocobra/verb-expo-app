@@ -13,6 +13,9 @@ const TestContainer = ({ selectedCount, resetApp, questions, totalCount, reset, 
       setResetTest,
    );
 
+   console.log('question data: ', questions[questionIndexArray[currentCount - 1]]);
+   console.log('Q id in index array: ', questionIndexArray[currentCount - 1]);
+
    if (testActive) {
       return (
          <View style={styles.root}>
@@ -20,7 +23,7 @@ const TestContainer = ({ selectedCount, resetApp, questions, totalCount, reset, 
                <Header />
                {questions.length && questionIndexArray.length && currentCount ? (
                   <Question
-                     question={questions[questionIndexArray[currentCount]]}
+                     question={questions[questionIndexArray[currentCount - 1]]}
                      handleResponse={handleResponse}
                      currentQuestionCount={currentCount}
                      resetApp={resetApp}

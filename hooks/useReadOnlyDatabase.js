@@ -97,3 +97,17 @@ export const useDatabase = (reset) => {
 
    return { totalCount, filteredData, fetchData };
 };
+
+export const useHintDatabase = (id) => {
+   const db = useSQLiteContext();
+   const [hint, setHint] = useState({});
+   useEffect(() => {
+      const fetchData = async () => {
+         const data = await db.getAllAsync(`SELECT * FROM hints WHERE id = ${id}`);
+         setHint(data[0]);
+      };
+
+      fetchData();
+   }, [id]);
+   return hint;
+};

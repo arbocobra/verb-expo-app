@@ -4,7 +4,8 @@ import { useUpdateDisplay } from '@/hooks/useUpdateDisplay';
 
 import { ImageBackground, StyleSheet, View } from 'react-native';
 
-const backgroundImagePath = require('../assets/images/background-pattern.png')
+const backgroundImagePath = require('../assets/images/pattern_600.png')
+// const backgroundImagePathAlt = require('../assets/images/pattern_1000.png')
 
 const MainAppContent = () => {
 // const MainAppContent = ({resetTest, renderKey}:{resetTest:() => void, renderKey:number}) => {
@@ -12,11 +13,9 @@ const MainAppContent = () => {
       setResetSelection } = useUpdateDisplay();
 
    return (
-       <ImageBackground source={backgroundImagePath} resizeMode='cover' style={styles.background} >
+       <ImageBackground source={backgroundImagePath} imageStyle={{width:600}} resizeMode='cover' style={styles.background} >
          <View style={styles.innerContainer}>
             {isActive ?
-               // <TestContainer key={renderKey} selectedCount={selectedCount} resetDisplay={resetDisplay} questions={questions} totalCount={questions.length} reset={reset} resetTest={resetTest} /> :
-               // <SelectionContainer key={renderKey} completeSelection={completeSelection} tense={tense} verb={verb} applyFilter={applyFilter} resetDisplay={resetDisplay} reset={reset} resetTest={resetTest} />
                <TestContainer selectedCount={selectedCount} resetApp={resetApp} questions={questions} totalCount={questions.length} reset={reset} setResetTest={setResetTest} /> :
                <SelectionContainer completeSelection={completeSelection} tense={tense} verb={verb} applyFilter={applyFilter} resetApp={resetApp} reset={reset} setResetSelection={setResetSelection} />
             }
@@ -28,14 +27,14 @@ const MainAppContent = () => {
 export default MainAppContent;
 
 const styles = StyleSheet.create({
-   container: {
-      flex: 1
-   },
+   // container: {
+   //    flex: 1
+   // },
    background: {
       flex: 1, overflowX: 'hidden', height: '100%', justifyContent: 'flex-end'
       // height:200, width:200
    },
    innerContainer: {
-      height: '92%', width: '100%', backgroundColor: '#fff', borderTopLeftRadius: 28, borderTopRightRadius: 28
+      height: '92%', width: '100%', backgroundColor: '#fff', borderTopLeftRadius: 24, borderTopRightRadius: 24
    }
 })

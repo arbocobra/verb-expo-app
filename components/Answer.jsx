@@ -13,7 +13,7 @@ const Answer = ({ QUESTION, resultId }) => {
             <Correct backgroundColor={theme.secondary} />
          ) : resultId === 1 ? (
             <WrongAccent correctResponse={correctResponse} backgroundColor={theme.tertiary} />
-         ) : resultId === 1 ? (
+         ) : resultId === 2 ? (
             <Incorrect correctResponse={correctResponse} backgroundColor={theme.primary} />
          ) : null}
       </View>

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
       padding: 10,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.2)',
+      boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.4)',
    },
    text: {
       fontSize: 18,
