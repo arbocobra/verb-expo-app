@@ -1,26 +1,25 @@
-import { useEffect, useState } from 'react';
 import { Gesture } from 'react-native-gesture-handler';
-import { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { measure, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { scheduleOnRN } from 'react-native-worklets';
 
-export const useHintAnimation = (textA, textB, id) => {
+export const useHintAnimation = (id, ref, updateHintText) => {
    const displayHintA = useSharedValue(false);
    const displayHintB = useSharedValue(false);
-   const arrowOffset = useSharedValue(10);
-   const [displayText, setDisplayText] = useState('');
+   const arrowOffset = useSharedValue(0.1);
 
    const tapHintA = Gesture.Tap()
       .maxDuration(250)
       .onStart(() => {
          if (displayHintA.value) {
             displayHintA.value = false;
-            setDisplayText('');
+            scheduleOnRN(updateHintText, 0);
          } else {
             if (displayHintB.value) {
                displayHintB.value = false;
             }
             displayHintA.value = true;
-            arrowOffset.value = withSpring(10, { duration: 300 });
-            setDisplayText(textA);
+            arrowOffset.value = withSpring(0.1, { duration: 300 });
+            scheduleOnRN(updateHintText, 1);
          }
       });
 
@@ -29,41 +28,41 @@ export const useHintAnimation = (textA, textB, id) => {
       .onStart(() => {
          if (displayHintB.value) {
             displayHintB.value = false;
-            setDisplayText('');
+            scheduleOnRN(updateHintText, 0);
          } else {
             if (displayHintA.value) {
                displayHintA.value = false;
             }
-            arrowOffset.value = withSpring(80, { duration: 300 });
             displayHintB.value = true;
-            setDisplayText(textB);
+            arrowOffset.value = withSpring(0.8, { duration: 300 });
+            scheduleOnRN(updateHintText, 2);
          }
       });
 
-   useEffect(() => {
-      displayHintA.value = false;
-      displayHintB.value = false;
-      arrowOffset.value = 10;
-      // console.log('hint id changed ', id);
-      setDisplayText('');
-   }, [id]);
-
-   // useEffect(() => {
-   //    console.log('something updated ', id);
-   // });
+   useAnimatedReaction(
+      () => id,
+      () => {
+         displayHintA.value = false;
+         displayHintB.value = false;
+      },
+   );
 
    const hintAnimatedStyle = useAnimatedStyle(() => {
-      const height =
-         displayHintA.value || displayHintB.value
-            ? withSpring(70, { duration: 500 })
-            : withSpring(0, { duration: 500 });
-      const padding = displayHintA.value || displayHintB.value ? 10 : 0;
+      const displayHint = displayHintA.value || displayHintB.value;
+      const height = displayHint ? withSpring(70, { duration: 500 }) : withSpring(0, { duration: 500 });
+      const padding = displayHint ? 10 : 0;
+
       return { height, padding };
    });
+
    const arrowAnimatedStyle = useAnimatedStyle(() => {
-      const visibility = displayHintA.value || displayHintB.value ? 'visible' : 'hidden';
-      return { transform: [{ translateX: `${arrowOffset.value}cqw` }], visibility };
+      const displayArrow = displayHintA.value || displayHintB.value;
+      const measurements = measure(ref);
+      const width = measurements ? measurements.width : 1;
+      const translateX = width * arrowOffset.value;
+      const opacity = displayArrow ? 1 : 0;
+      return { transform: [{ translateX }], opacity };
    });
 
-   return { hintAnimatedStyle, arrowAnimatedStyle, tapHintA, tapHintB, displayText };
+   return { hintAnimatedStyle, arrowAnimatedStyle, tapHintA, tapHintB };
 };

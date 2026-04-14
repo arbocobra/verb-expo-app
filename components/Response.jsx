@@ -50,6 +50,8 @@ const Response = ({ pronoun, isImperative, submit }) => {
                   maxLength={20}
                   style={styles.input}
                   onSubmitEditing={handleSubmit}
+                  textContentType='none'
+                  spellCheck={false}
                />
                <Pressable style={styles.buttonContainer} onPress={handleSubmit}>
                   <Ionicons name='arrow-forward' size={20} />

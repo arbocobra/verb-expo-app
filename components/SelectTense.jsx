@@ -28,10 +28,7 @@ const SelectTense = ({ tense, displayStyle, applyFilter, reset, setResetTenseSel
    return (
       <Animated.View style={[styles.container, displayStyle]}>
          <FlatList
-            contentContainerStyle={{
-               height: '75%',
-               width: '100%',
-            }}
+            contentContainerStyle={styles.flatContainer}
             numColumns={2}
             data={optionList}
             renderItem={renderItem}
@@ -41,10 +38,8 @@ const SelectTense = ({ tense, displayStyle, applyFilter, reset, setResetTenseSel
 };
 
 const styles = StyleSheet.create({
-   container: {
-      width: '100%',
-      paddingHorizontal: 10,
-   },
+   container: { width: '100%', paddingHorizontal: 10 },
+   flatContainer: { width: '100%', height: '70%' },
 });
 
 export default SelectTense;

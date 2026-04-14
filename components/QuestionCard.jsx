@@ -4,6 +4,8 @@ import { QuestionDetails } from './ui/QuestionDetails';
 
 const QuestionCard = ({ QUESTION, currentQuestionCount }) => {
    const { theme } = useTheme();
+   // const { height } = useWindowDimensions();
+   // console.log('30% win height: ', height * 0.3);
    const { conjugationEN, pronounEN, isPlural, isNegative, isFormal, isImperative, isTemporary } = QUESTION;
    const innerText = isImperative ? `${conjugationEN}!` : `${pronounEN} ${conjugationEN}`;
 
@@ -83,7 +85,7 @@ export default QuestionCard;
 
 const styles = StyleSheet.create({
    container: {
-      height: 320,
+      height: 300,
       alignItems: 'center',
    },
    boxC: {

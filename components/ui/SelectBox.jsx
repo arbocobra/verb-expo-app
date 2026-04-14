@@ -11,9 +11,7 @@ const SelectBox = ({ id, type, value, action, isChecked }) => {
             : type === 'verb'
               ? theme.secondaryExtraLight
               : theme.tertiaryExtraLight,
-
       darkBg: type === 'tense' ? theme.primaryDark : type === 'verb' ? theme.secondaryDark : theme.tertiaryDark,
-
       border: type === 'tense' ? theme.primaryLight : type === 'verb' ? theme.secondaryLight : theme.tertiaryLight,
       spacing: type === 'verb' ? 5 : 10,
       buttonHeight: type === 'verb' ? 50 : 60,
@@ -25,7 +23,7 @@ const SelectBox = ({ id, type, value, action, isChecked }) => {
    };
 
    return (
-      <View style={[styles.container, { padding: conditionalStyles.spacing }]}>
+      <View style={styles.container}>
          <Pressable
             disabled={false}
             onPress={handleSelect}
@@ -46,17 +44,14 @@ const SelectBox = ({ id, type, value, action, isChecked }) => {
 };
 
 const styles = StyleSheet.create({
-   container: { flex: 1 },
+   container: { flex: 1, padding: 8 },
    button: {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 12,
       borderWidth: 2,
       borderStyle: 'solid',
-      // height: 50,
    },
-   checkbox: {},
-   textContainer: {},
    label: { fontSize: 18, fontWeight: '500', textAlign: 'center', textTransform: 'capitalize', lineHeight: 22 },
 });
 

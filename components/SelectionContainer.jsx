@@ -1,12 +1,13 @@
 import { useTheme } from '@/app/ThemeContext';
 import { useSelectionAnimation } from '@/hooks/useSelectionAnimation';
 import { useSelectionStatus } from '@/hooks/useSelectionStatus';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import SelectCount from './SelectCount';
 import SelectTense from './SelectTense';
 import SelectVerb from './SelectVerbs';
+import { SelectionBody } from './ui/SelectionBody';
 
 const SelectionContainer = ({ completeSelection, tense, verb, applyFilter, resetApp, reset, setResetSelection }) => {
    const { theme } = useTheme();
@@ -18,14 +19,12 @@ const SelectionContainer = ({ completeSelection, tense, verb, applyFilter, reset
 
    return (
       <View style={styles.root}>
-         <Text style={styles.title}>Selection Container</Text>
          <View style={styles.container}>
             <View style={styles.innerContainer}>
-               {/* body here */}
-               <Pressable style={{ border: '1px solid black', padding: 10 }} onPress={resetApp}>
+               {/* <Pressable style={{ border: '1px solid black', padding: 10 }} onPress={resetApp}>
                   <Text style={{ fontSize: 18, fontWeight: 600 }}>Reset</Text>
-               </Pressable>
-
+               </Pressable> */}
+               <SelectionBody />
                <Animated.View style={[styles.button, animatedStyles.tense, { backgroundColor: theme.primary }]}>
                   <GestureDetector gesture={actions.tense}>
                      <Animated.View style={[styles.testContainer, animatedStyles.tenseHeader]}>
@@ -87,20 +86,16 @@ const styles = StyleSheet.create({
    title: { fontSize: 28, textAlign: 'center', fontWeight: '600', marginTop: 15, marginBottom: 20 },
    container: { flex: 1 },
    innerContainer: { flex: 1, zIndex: 1 },
-   bodyText: { flex: 1, paddingLeft: 10, paddingRight: 10 },
-   bodyTextItem: { marginBottom: 10, fontSize: 16 },
+   // bodyText: { flex: 1, paddingLeft: 10, paddingRight: 10 },
+   // bodyTextItem: { marginBottom: 10, fontSize: 16 },
    button: {
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
-      // paddingTop: 30,
-      // padding: 20,
       position: 'absolute',
       width: '100%',
       bottom: 0,
       alignItems: 'center',
       maxHeight: '100%',
-      // transitionProperty: 'height',
-      // transitionDuration: 200,
    },
    testContainer: { width: '100%', alignItems: 'center', justifyContent: 'center' },
    buttonText: { fontSize: 24, fontWeight: '600', textTransform: 'capitalize' },

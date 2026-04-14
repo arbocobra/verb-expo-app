@@ -6,15 +6,12 @@ import Question from './Question';
 import Results from './Results';
 
 const TestContainer = ({ selectedCount, resetApp, questions, totalCount, reset, setResetTest }) => {
-   const { currentCount, handleResponse, testActive, questionIndexArray, results } = useTestStatus(
+   const { currentCount, handleResponse, testActive, questionIndexArray, results, exitTest } = useTestStatus(
       totalCount,
       selectedCount,
       reset,
       setResetTest,
    );
-
-   console.log('question data: ', questions[questionIndexArray[currentCount - 1]]);
-   console.log('Q id in index array: ', questionIndexArray[currentCount - 1]);
 
    if (testActive) {
       return (
@@ -34,7 +31,7 @@ const TestContainer = ({ selectedCount, resetApp, questions, totalCount, reset, 
                {/* <Pressable style={{ border: '1px solid black', padding: 10 }} onPress={resetTest}>
                   <Text style={{ fontSize: 18, fontWeight: 600 }}>Reset</Text>
                </Pressable> */}
-               <Footer questionCount={selectedCount} currentCount={currentCount} />
+               <Footer questionCount={selectedCount} currentCount={currentCount} exitTest={exitTest} />
             </View>
          </View>
       );

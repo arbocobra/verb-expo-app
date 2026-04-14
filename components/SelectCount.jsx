@@ -36,11 +36,8 @@ const SelectCount = ({ tense, verb, display, completeSelection, displayStyle, re
          <Text style={styles.text}>Total possible questions: {totalCount}</Text>
          <View style={styles.innerContainer}>
             <FlatList
-               contentContainerStyle={{
-                  height: '75%',
-                  width: '100%',
-               }}
-               numColumns={1}
+               contentContainerStyle={styles.flatContainer}
+               numColumns={2}
                data={countOptions}
                renderItem={renderItem}
             />
@@ -50,17 +47,10 @@ const SelectCount = ({ tense, verb, display, completeSelection, displayStyle, re
 };
 
 const styles = StyleSheet.create({
-   container: {
-      width: '100%',
-      paddingHorizontal: 10,
-   },
+   container: { width: '100%', paddingHorizontal: 10 },
    innerContainer: { height: '70%' },
-   goContainer: { flex: 1, justifyContent: 'flex-end' },
-   text: {
-      fontSize: 18,
-      fontWeight: '500',
-      textAlign: 'center',
-   },
+   flatContainer: { marginVertical: 30, width: '100%' },
+   text: { fontSize: 18, fontWeight: '500', textAlign: 'center' },
 });
 
 export default SelectCount;

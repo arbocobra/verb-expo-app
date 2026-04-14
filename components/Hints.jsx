@@ -1,18 +1,14 @@
 import { useTheme } from '@/app/ThemeContext';
 import { useHintAnimation } from '@/hooks/useHintAnimation';
-import { useHintDatabase } from '@/hooks/useReadOnlyDatabase';
+import { useHintDisplay } from '@/hooks/useHintDisplay';
 import { StyleSheet, Text, View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, { useAnimatedRef } from 'react-native-reanimated';
 
-const Hints = ({ id, pronoun }) => {
-   const { infinitive, tense, value } = useHintDatabase(id);
-   const hintText = `Tense: ${tense} || Pronoun: ${pronoun} || Infinitive: ${infinitive}`;
-   const { hintAnimatedStyle, arrowAnimatedStyle, tapHintA, tapHintB, displayText } = useHintAnimation(
-      hintText,
-      value,
-      id,
-   );
+const Hints = ({ QUESTION }) => {
+   const { id, displayText, updateHintText } = useHintDisplay(QUESTION);
+   const arrowRef = useAnimatedRef();
+   const { hintAnimatedStyle, arrowAnimatedStyle, tapHintA, tapHintB } = useHintAnimation(id, arrowRef, updateHintText);
    const { theme } = useTheme();
 
    return (
@@ -20,9 +16,9 @@ const Hints = ({ id, pronoun }) => {
          <Animated.View style={[hintAnimatedStyle, styles.hintContainer, { backgroundColor: theme.tertiary }]}>
             <Text style={styles.hintText}>{displayText}</Text>
          </Animated.View>
-         <View style={styles.arrowContainer}>
+         <Animated.View ref={arrowRef} style={styles.arrowContainer}>
             <Animated.View style={[styles.arrow, arrowAnimatedStyle, { borderTopColor: theme.tertiary }]} />
-         </View>
+         </Animated.View>
          <View style={styles.hintRow}>
             <GestureDetector gesture={tapHintA}>
                <View style={[styles.buttonContainer, { backgroundColor: theme.tertiary }]}>
@@ -68,6 +64,6 @@ const styles = StyleSheet.create({
       borderRightColor: 'transparent',
       borderLeftColor: 'transparent',
    },
-   arrowContainer: { width: '100%', height: 13, containerType: 'size' },
+   arrowContainer: { width: '100%', height: 13 },
    hintText: { fontSize: 18, fontWeight: 600, textTransform: 'capitalize' },
 });

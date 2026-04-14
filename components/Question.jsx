@@ -1,6 +1,6 @@
 import { useQuestionFormat } from '@/hooks/useQuestionFormat';
 import { useSubmitResponse } from '@/hooks/useSubmitResponse';
-import { StyleSheet, Text, View } from 'react-native';
+import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import Answer from './Answer';
 import Hints from './Hints';
 import QuestionCard from './QuestionCard';
@@ -13,10 +13,12 @@ const Question = ({ question, handleResponse, currentQuestionCount, resetApp }) 
    if (QUESTION) {
       return (
          <View style={styles.container}>
-            <QuestionCard QUESTION={QUESTION} currentQuestionCount={currentQuestionCount} />
-            <Response isImperative={QUESTION.isImperative} pronoun={QUESTION.pronounPR} submit={handleSubmit} />
-            <Answer QUESTION={QUESTION} resultId={resultId} />
-            <Hints id={QUESTION.hint} pronoun={QUESTION.pronounPR} />
+            <Pressable style={{ display: 'flex', flex: 1 }} onPress={Keyboard.dismiss}>
+               <QuestionCard QUESTION={QUESTION} currentQuestionCount={currentQuestionCount} />
+               <Response isImperative={QUESTION.isImperative} pronoun={QUESTION.pronounPR} submit={handleSubmit} />
+               <Answer QUESTION={QUESTION} resultId={resultId} />
+               <Hints QUESTION={QUESTION} />
+            </Pressable>
          </View>
       );
    } else
@@ -31,6 +33,10 @@ export default Question;
 
 const styles = StyleSheet.create({
    container: {
+      // height: 'auto',
+      // width: '100%',
+      // display: 'flex',
+      // flexDirection: 'column',
       padding: 20,
       alignContent: 'center',
       flex: 1,

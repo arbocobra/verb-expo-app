@@ -25,6 +25,10 @@ export const useTestStatus = (totalCount, selectedCount, reset, setResetTest) =>
       }
    };
 
+   const exitTest = () => {
+      setTestActive(false);
+   };
+
    useEffect(() => {
       if (currentCount > 0 && currentCount === selectedCount) setIsFinal(true);
    }, [currentCount, selectedCount]);
@@ -34,15 +38,6 @@ export const useTestStatus = (totalCount, selectedCount, reset, setResetTest) =>
          console.log('is final ', results);
       }
    }, [isFinal]);
-
-   useEffect(() => {
-      console.log('currentCount: ', currentCount);
-      console.log('Q array: ', questionIndexArray);
-      console.log('results: ', results);
-      console.log('isFinal: ', isFinal);
-      console.log('testActive: ', testActive);
-      // console.log('useEffect test');
-   }, [currentCount, questionIndexArray, results, isFinal, testActive]);
 
    useEffect(() => {
       const indexArray = Array.from({ length: totalCount }, (_, i) => i);
@@ -69,5 +64,5 @@ export const useTestStatus = (totalCount, selectedCount, reset, setResetTest) =>
       }
    }, [reset]);
 
-   return { currentCount, handleResponse, testActive, questionIndexArray, results };
+   return { currentCount, handleResponse, testActive, questionIndexArray, results, exitTest };
 };
